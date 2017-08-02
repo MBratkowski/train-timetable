@@ -1,13 +1,14 @@
 ext {
     android = [
-            compileSdkVersion: 25,
-            buildToolsVersion: "25.0.3",
-            minSdkVersion    : 19,
-            targetSdkVersion : 25,
+            compileSdkVersion : 25,
+            buildToolsVersion : "25.0.3",
+            minSdkVersion     : 19,
+            minSdkDebugVersion: 21,
+            targetSdkVersion  : 25,
     ]
     build = [
-            gradle: "3.0.0-alpha2",
-            kotlin: "1.1.2-4"
+            gradle: "3.0.0-alpha9",
+            kotlin: "1.1.3-2"
     ]
 
     buildPlugins = [
@@ -15,18 +16,32 @@ ext {
             kotlin: "org.jetbrains.kotlin:kotlin-gradle-plugin:$build.kotlin"
     ]
 
-    def androidSupportLibs = '25.3.1'
+    def androidSupportLibs = '25.4.0'
     def versionJUnit = '4.12'
     def versionEspresso = '2.2.2'
     def versionRxJava = '2.1.0'
-    def versionDagger = '2.10'
+    def versionRxKotlin = '2.0.3'
+    def versionRxAndroid = '2.0.1'
+    def versionDagger = '2.11'
+    def versionConstraint = '1.0.2'
+    def versionJavax = '1'
+    def versionPresistence = '1.0.0-alpha3'
 
     def libs = [
-            appCompat     : [group: 'com.android.support', name: 'appcompat-v7', version: androidSupportLibs],
-            kotlin        : [group: 'org.jetbrains.kotlin', name: 'kotlin-stdlib-jre7', version: build.kotlin],
-            rxjava2       : [group: 'io.reactivex.rxjava2', name: 'rxjava', version: versionRxJava],
-            dagger        : [group: 'com.google.dagger', name: 'dagger', version: versionDagger],
-            daggerCompiler: [group: 'com.google.dagger', name: 'dagger-compiler', version: versionDagger]
+            appCompat          : [group: 'com.android.support', name: 'appcompat-v7', version: androidSupportLibs],
+            constraintLayout   : [group: 'com.android.support.constraint', name: 'constraint-layout', version: versionConstraint],
+            kotlin             : [group: 'org.jetbrains.kotlin', name: 'kotlin-stdlib-jre7', version: build.kotlin],
+            rxJava             : [group: 'io.reactivex.rxjava2', name: 'rxjava', version: versionRxJava],
+            rxAndroid          : [group: 'io.reactivex.rxjava2', name: 'rxandroid', version: versionRxAndroid],
+            rxKotlin           : [group: 'io.reactivex.rxjava2', name: 'rxkotlin', version: versionRxKotlin],
+            dagger             : [group: 'com.google.dagger', name: 'dagger', version: versionDagger],
+            javax              : [group: 'javax.inject', name: 'javax.inject', version: '1'],
+            daggerCompiler     : [group: 'com.google.dagger', name: 'dagger-compiler', version: versionDagger],
+            dataBindingCompiler: [group: 'com.android.databinding', name: 'compiler', version: build.gradle],
+            design             : [group: 'com.android.support', name: 'design', version: androidSupportLibs],
+            persistence        : [group: 'android.arch.persistence.room', name: 'runtime', version: versionPresistence],
+            persistenceRx      : [group: 'android.arch.persistence.room', name: 'rxjava2', version: versionPresistence],
+            persistenceCompiler: [group: 'android.arch.persistence.room', name: 'compiler', version: versionPresistence]
     ]
 
     def testLibs = [
@@ -45,47 +60,61 @@ ext {
     }
 
     applicationModuleDependencies = [
-            [configuration: "compile", dependency: libs.appCompat],
-            [configuration: "compile", dependency: libs.kotlin],
-            [configuration: "compile", dependency: libs.dagger],
+            [configuration: "implementation", dependency: libs.appCompat],
+            [configuration: "implementation", dependency: libs.kotlin],
+            [configuration: "implementation", dependency: libs.dagger],
+            [configuration: "implementation", dependency: libs.constraintLayout],
+            [configuration: "implementation", dependency: libs.design],
             [configuration: "kapt", dependency: libs.daggerCompiler],
+            [configuration: "kapt", dependency: libs.dataBindingCompiler],
             [configuration: "testCompile", dependency: testLibs.junit],
             [configuration: "androidTestCompile", dependency: testLibs.espresso,
              options      : supportAnnotationsExclude],
 
+            [configuration: "implementation", dependency: project(modules.domain)],
             [configuration: "implementation", dependency: project(modules.data)],
-            [configuration: "implementation", dependency: project(modules.presentation)],
+            [configuration: "implementation", dependency: project(modules.presentation)]
     ]
 
     presentationModuleDependencies = [
-            [configuration: "compile", dependency: libs.kotlin_stdlib],
+            [configuration: "implementation", dependency: libs.kotlin],
             [configuration: "testCompile", dependency: testLibs.junit],
             [configuration: "implementation", dependency: project(modules.domain)]
     ]
 
     domainModuleDependencies = [
             [configuration: "testCompile", dependency: testLibs.junit],
-            [configuration: "compile", dependency: libs.kotlin]
+            [configuration: "implementation", dependency: libs.kotlin],
+            [configuration: "implementation", dependency: libs.rxJava],
+            [configuration: "implementation", dependency: libs.rxKotlin],
+            [configuration: "implementation", dependency: libs.javax]
     ]
 
     dataModuleDependencies = [
-            [configuration: "compile", dependency: libs.rxJava],
-            [configuration: "compile", dependency: libs.kotlin],
+            [configuration: "implementation", dependency: libs.rxJava],
+            [configuration: "implementation", dependency: libs.rxKotlin],
+            [configuration: "implementation", dependency: libs.rxAndroid],
+            [configuration: "implementation", dependency: libs.javax],
+            [configuration: "implementation", dependency: libs.kotlin],
+            [configuration: "implementation", dependency: libs.persistence],
+            [configuration: "compile", dependency: libs.persistenceRx],
+            [configuration: "kapt", dependency: libs.persistenceCompiler],
             [configuration: "testCompile", dependency: testLibs.junit],
-            [configuration: "androidTestCompile", dependency: testLibs.espressoCore,
+            [configuration: "androidTestCompile", dependency: testLibs.espresso,
              options      : supportAnnotationsExclude],
-
             [configuration: "implementation", dependency: project(modules.domain)]
+
     ]
 
     def plugins = [
             kotlin_android: 'kotlin-android',
-            kotlin: 'kotlin',
-            java: 'java'
+            kotlin_kapt   : 'kotlin-kapt',
+            kotlin        : 'kotlin',
+            java          : 'java'
     ]
 
-    applicationModulePlugins = [ plugins.kotlin_android ]
-    presentationModulePlugins = [ plugins.kotlin ]
-    domainModulePlugins = [ plugins.kotlin ]
-    dataModulePlugins = [ plugins.kotlin_android ]
+    applicationModulePlugins = [plugins.kotlin_android, plugins.kotlin_kapt]
+    presentationModulePlugins = [plugins.kotlin]
+    domainModulePlugins = [plugins.kotlin]
+    dataModulePlugins = [plugins.kotlin_android]
 }
