@@ -67,8 +67,8 @@ ext {
             [configuration: "implementation", dependency: libs.design],
             [configuration: "kapt", dependency: libs.daggerCompiler],
             [configuration: "kapt", dependency: libs.dataBindingCompiler],
-            [configuration: "testCompile", dependency: testLibs.junit],
-            [configuration: "androidTestCompile", dependency: testLibs.espresso,
+            [configuration: "testImplementation", dependency: testLibs.junit],
+            [configuration: "androidTestImplementation", dependency: testLibs.espresso,
              options      : supportAnnotationsExclude],
 
             [configuration: "implementation", dependency: project(modules.domain)],
@@ -78,12 +78,12 @@ ext {
 
     presentationModuleDependencies = [
             [configuration: "implementation", dependency: libs.kotlin],
-            [configuration: "testCompile", dependency: testLibs.junit],
+            [configuration: "testImplementation", dependency: testLibs.junit],
             [configuration: "implementation", dependency: project(modules.domain)]
     ]
 
     domainModuleDependencies = [
-            [configuration: "testCompile", dependency: testLibs.junit],
+            [configuration: "testImplementation", dependency: testLibs.junit],
             [configuration: "implementation", dependency: libs.kotlin],
             [configuration: "implementation", dependency: libs.rxJava],
             [configuration: "implementation", dependency: libs.rxKotlin],
@@ -97,10 +97,10 @@ ext {
             [configuration: "implementation", dependency: libs.javax],
             [configuration: "implementation", dependency: libs.kotlin],
             [configuration: "implementation", dependency: libs.persistence],
-            [configuration: "compile", dependency: libs.persistenceRx],
+            [configuration: "implementation", dependency: libs.persistenceRx],
             [configuration: "kapt", dependency: libs.persistenceCompiler],
-            [configuration: "testCompile", dependency: testLibs.junit],
-            [configuration: "androidTestCompile", dependency: testLibs.espresso,
+            [configuration: "testImplementation", dependency: testLibs.junit],
+            [configuration: "androidTestImplementation", dependency: testLibs.espresso,
              options      : supportAnnotationsExclude],
             [configuration: "implementation", dependency: project(modules.domain)]
 
