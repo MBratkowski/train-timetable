@@ -1,7 +1,7 @@
 package io.bratexsoft.presentation.presenter
 
 import io.bratexsoft.domain.UseCaseFactory
-import io.bratexsoft.domain.entity.Station
+import io.bratexsoft.domain.entity.StationDefinition
 import io.bratexsoft.presentation.ViewType
 import io.bratexsoft.presentation.base.BasePresenter
 import io.bratexsoft.presentation.contract.CollectionContract
@@ -11,7 +11,7 @@ import java.util.*
 
 class StationListPresenter(val useCaseFactory: UseCaseFactory) : BasePresenter<StationListContract.View>(), StationListContract.Presenter {
 
-    var stationList: ArrayList<ViewType> = ArrayList<ViewType>()
+    var stationList: ArrayList<ViewType> = ArrayList()
 
     override fun getCollectionSize(): Int = stationList.size
 
@@ -33,12 +33,12 @@ class StationListPresenter(val useCaseFactory: UseCaseFactory) : BasePresenter<S
         view?.onDataError(message)
     }
 
-    private class DataCallback(val presenter: CollectionContract<StationItem>) : io.bratexsoft.domain.usecase.base.CallbackData<List<Station>> {
+    private class DataCallback(val presenter: CollectionContract<StationItem>) : io.bratexsoft.domain.usecase.base.CallbackData<List<StationDefinition>> {
 
-        override fun onSuccess(data: List<Station>) {
+        override fun onSuccess(data: List<StationDefinition>) {
             val items: ArrayList<ViewType> = ArrayList<ViewType>()
             data.forEach {
-                items.add(StationItem(it.cityName))
+                items.add(StationItem(it.getStationName()))
             }
             presenter.bindResult(items)
         }

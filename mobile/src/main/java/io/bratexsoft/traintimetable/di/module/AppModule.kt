@@ -5,6 +5,8 @@ import android.content.Context
 import dagger.Module
 import dagger.Provides
 import io.bratexsoft.data.DataRepositoryFactory
+import io.bratexsoft.data.local.LocalRepositoryProvider
+import io.bratexsoft.data.remote.RemoteRepositoryProvider
 import io.bratexsoft.domain.DataRepository
 import io.bratexsoft.domain.UseCaseFactory
 import javax.inject.Singleton
@@ -22,7 +24,8 @@ class AppModule(val application: Application) {
 
     @Provides
     @Singleton
-    fun provideDataRepository(): DataRepository = DataRepositoryFactory()
+    fun provideDataRepositoryFactory(localRepositoryProvider: LocalRepositoryProvider,
+                                     remoteRepositoryProvider: RemoteRepositoryProvider): DataRepository = DataRepositoryFactory(localRepositoryProvider, remoteRepositoryProvider)
 
     @Provides
     @Singleton

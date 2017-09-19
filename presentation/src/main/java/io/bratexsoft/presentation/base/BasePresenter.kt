@@ -2,7 +2,7 @@ package io.bratexsoft.presentation.base
 
 open class BasePresenter<ViewType : BaseView> {
 
-    var view: ViewType? = null
+    lateinit var view: ViewType
 
     fun onTakeView(view: ViewType) {
         this.view = view
@@ -10,7 +10,7 @@ open class BasePresenter<ViewType : BaseView> {
     }
 
     fun onDropView() {
-        this.view = null
+        //this.view = null
     }
 
     open fun onTakenView(view: ViewType) {

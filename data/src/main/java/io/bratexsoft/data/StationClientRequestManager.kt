@@ -1,34 +1,34 @@
 package io.bratexsoft.data
 
-import io.bratexsoft.domain.entity.Station
-import io.bratexsoft.domain.gateway.StationGateway
-import io.bratexsoft.domain.usecase.base.CallbackData
+class StationClientRequestManager constructor(private val stationRepository: StationRepository) {
 
-class StationClientRequestManager : RequestManager<Station, Unit>, StationGateway {
+    /*lateinit var callback: CallbackData<List<StationDefinition>>
 
-    override fun getStationList(callbackData: CallbackData<List<Station>>) {
+    override fun getStationList(callbackData: CallbackData<List<StationDefinition>>) {
+        this.callback = callbackData
         if (shouldFetch()) {
             createCall(Unit)
+        } else {
+            loadFromDb()
         }
     }
 
-    override fun createCall(item: Unit): Station {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun createCall(item: Unit): List<StationDefinition> {
+        stationRepository.stationRemoteRepository.getStationList(callback)
     }
 
-    override fun saveCallResultToDb(item: Station) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun saveCallResultToDb(item: List<StationDefinition>) {
+        stationRepository.stationLocalRepository.saveStationList(item)
     }
 
     override fun shouldFetch(): Boolean {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        return true
     }
 
-    override fun loadFromDb(): Station {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun loadFromDb(): List<StationDefinition> {
+        stationRepository.stationLocalRepository.getStationList(callback)
     }
 
     override fun onFetchFailed() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
+    }*/
 }

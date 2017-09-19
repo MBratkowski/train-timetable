@@ -5,6 +5,7 @@ import android.databinding.ViewDataBinding
 import android.os.Bundle
 import android.support.annotation.LayoutRes
 import android.support.v7.app.AppCompatActivity
+import com.google.firebase.analytics.FirebaseAnalytics
 import io.bratexsoft.presentation.base.BasePresenter
 import io.bratexsoft.presentation.base.BaseView
 import io.bratexsoft.traintimetable.app.TrainTimetableInjector
@@ -21,7 +22,9 @@ abstract class BaseActivity<B : ViewDataBinding, V : BaseView, P : BasePresenter
 
     lateinit var binding: B
 
-    val activityComponent: ActivityComponent by lazy {
+    lateinit var firebaseAnalitycs: FirebaseAnalytics
+
+    private val activityComponent: ActivityComponent by lazy {
         DaggerActivityComponent.builder().
                 appComponent(getAppComponent())
                 .activityModule(ActivityModule(this))
@@ -39,8 +42,9 @@ abstract class BaseActivity<B : ViewDataBinding, V : BaseView, P : BasePresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        firebaseAnalitycs = FirebaseAnalytics.getInstance(this)
         performFieldInjection(activityComponent)
-        binding = DataBindingUtil.setContentView<B>(this, getLayoutRest())
+        binding = DataBindingUtil.setContentView(this, getLayoutRest())
         attachPresenterToDataBinding(presenter, binding)
         attachViewToPresenter(presenter)
     }
