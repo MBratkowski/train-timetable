@@ -1,22 +1,24 @@
 ext {
     android = [
-            compileSdkVersion : 25,
-            buildToolsVersion : "25.0.3",
+            compileSdkVersion : 26,
+            buildToolsVersion : "26.0.1",
             minSdkVersion     : 19,
             minSdkDebugVersion: 21,
-            targetSdkVersion  : 25,
+            targetSdkVersion  : 26,
     ]
     build = [
-            gradle: "3.0.0-alpha9",
-            kotlin: "1.1.4-2"
+            gradle      : "3.0.0-beta6",
+            kotlin      : "1.1.4-2",
+            playServices: "3.1.0"
     ]
 
     buildPlugins = [
-            gradle: "com.android.tools.build:gradle:$build.gradle",
-            kotlin: "org.jetbrains.kotlin:kotlin-gradle-plugin:$build.kotlin"
+            playServices: "com.google.gms:google-services:$build.playServices",
+            gradle      : "com.android.tools.build:gradle:$build.gradle",
+            kotlin      : "org.jetbrains.kotlin:kotlin-gradle-plugin:$build.kotlin"
     ]
 
-    def androidSupportLibs = '25.4.0'
+    def androidSupportLibs = '26.0.2'
     def versionJUnit = '4.12'
     def versionEspresso = '2.2.2'
     def versionRxJava = '2.1.0'
@@ -25,7 +27,8 @@ ext {
     def versionDagger = '2.11'
     def versionConstraint = '1.0.2'
     def versionJavax = '1'
-    def versionPresistence = '1.0.0-alpha3'
+    def versionFirebase = '11.2.0'
+    def versionPresistence = '1.0.0-alpha9'
 
     def libs = [
             appCompat          : [group: 'com.android.support', name: 'appcompat-v7', version: androidSupportLibs],
@@ -41,7 +44,8 @@ ext {
             design             : [group: 'com.android.support', name: 'design', version: androidSupportLibs],
             persistence        : [group: 'android.arch.persistence.room', name: 'runtime', version: versionPresistence],
             persistenceRx      : [group: 'android.arch.persistence.room', name: 'rxjava2', version: versionPresistence],
-            persistenceCompiler: [group: 'android.arch.persistence.room', name: 'compiler', version: versionPresistence]
+            persistenceCompiler: [group: 'android.arch.persistence.room', name: 'compiler', version: versionPresistence],
+            firebase           : [group: 'com.google.firebase', name: 'firebase-database', version: versionFirebase]
     ]
 
     def testLibs = [
@@ -96,7 +100,7 @@ ext {
             [configuration: "implementation", dependency: libs.rxAndroid],
             [configuration: "implementation", dependency: libs.javax],
             [configuration: "implementation", dependency: libs.kotlin],
-            [configuration: "implementation", dependency: libs.persistence],
+            [configuration: "api", dependency: libs.persistence],
             [configuration: "implementation", dependency: libs.persistenceRx],
             [configuration: "kapt", dependency: libs.persistenceCompiler],
             [configuration: "testImplementation", dependency: testLibs.junit],
@@ -116,5 +120,5 @@ ext {
     applicationModulePlugins = [plugins.kotlin_android, plugins.kotlin_kapt]
     presentationModulePlugins = [plugins.kotlin]
     domainModulePlugins = [plugins.kotlin]
-    dataModulePlugins = [plugins.kotlin_android]
+    dataModulePlugins = [plugins.kotlin_android, plugins.kotlin_kapt]
 }

@@ -42,7 +42,10 @@ android {
 }
 
 dependencies {
+    implementation 'com.google.firebase:firebase-core:11.0.4'
     rootProject.applicationModuleDependencies.each {
         add(it.configuration, it.dependency, it.options)
     }
 }
+
+apply plugin: 'com.google.gms.google-services'

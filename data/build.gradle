@@ -29,5 +29,6 @@ dependencies {
     rootProject.dataModuleDependencies.each {
         add(it.configuration, it.dependency, it.options)
     }
-    compile group: 'javax.inject', name: 'javax.inject', version: '1'
+    api 'com.google.firebase:firebase-database:11.0.4'
+    implementation group: 'javax.inject', name: 'javax.inject', version: '1'
 }
