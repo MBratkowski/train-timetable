@@ -6,7 +6,6 @@ import io.bratexsoft.domain.usecase.base.CallbackData
 
 class StationClientRequestManager : RequestManager<Station, Unit>, StationGateway {
 
-
     override fun getStationList(callbackData: CallbackData<List<Station>>) {
         if (shouldFetch()) {
             createCall(Unit)
