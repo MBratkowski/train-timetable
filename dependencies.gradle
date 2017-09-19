@@ -18,7 +18,7 @@ ext {
             kotlin      : "org.jetbrains.kotlin:kotlin-gradle-plugin:$build.kotlin"
     ]
 
-    def androidSupportLibs = '26.0.2'
+    def androidSupportLibs = '26.1.0'
     def versionJUnit = '4.12'
     def versionEspresso = '2.2.2'
     def versionRxJava = '2.1.0'
